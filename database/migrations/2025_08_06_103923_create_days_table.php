@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('activities');
             $table->string('image');
             $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade');
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
             $table->timestamps();
         });
     }

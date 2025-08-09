@@ -324,8 +324,10 @@
     <div class="custom-shadow border-bottom border-2 my-5 container"></div>
 @endsection
 
-<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+{{-- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script> --}}
 <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
     document.getElementById("searchInput").addEventListener("input", function () {
         const query = this.value.toLowerCase();
         const cards = document.querySelectorAll(".card");
@@ -341,4 +343,5 @@
             }
         });
     });
+   });
 </script>

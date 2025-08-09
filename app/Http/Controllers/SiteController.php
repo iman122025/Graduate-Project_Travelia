@@ -59,8 +59,12 @@ class SiteController extends Controller
         return view('site.planning', compact('cities'));
     }
 
-    public function plan(Request $request)
+    ////////////
+
+    /* public function plan(Request $request)
     {
+
+        //dd($request->all());
 
         $from = Carbon::parse($request->from_date);
         $to   = Carbon::parse($request->to_date);
@@ -69,6 +73,11 @@ class SiteController extends Controller
 
         session([
             'days' => $days,
+        ]);
+
+        session([
+            'filter_city' => $request->to_city_id,
+            'filter_budget' => $request->budget,
         ]);
 
         $hotels = Hotel::with('city')
@@ -80,6 +89,13 @@ class SiteController extends Controller
 
         $filteredHotels = $hotels->get();
 
+
+        ///////////////////////
+        /* $hotels = Hotel::with('city')
+            ->when($request->to_city_id, fn($q) => $q->where('city_id', $request->to_city_id))
+            ->when($request->budget, fn($q) => $q->where('price', '<=', $request->budget))
+            ->get(); */
+
         ///////////////////////
         /* $filteredHotels = Hotel::with('city')
             ->where('city_id', $request->to_city_id)
@@ -87,10 +103,52 @@ class SiteController extends Controller
                 $query->where('price', '<=', $request->budget);
             })
             ->get(); */
-        ///////////////////////
 
+        ///////////////////////
+/*
         return view('site.plan', compact('filteredHotels'));
+    } */
+
+////////////
+
+    public function plan(Request $request)
+{
+    // إذا أرسل الطلب تواريخ، احسب الفرق وعدد الأيام وخزنها
+    if ($request->filled('from_date') && $request->filled('to_date')) {
+        $from = Carbon::parse($request->from_date);
+        $to   = Carbon::parse($request->to_date);
+        $days = $from->diffInDays($to);
+        session(['days' => $days]);
     }
+
+    // جلب قيم الفلترة من الريكوست أو من السيشن إذا لم تكن موجودة في الريكوست
+    $cityId = $request->filled('to_city_id') ? $request->to_city_id : session('filter_city');
+    $budget = $request->filled('budget') ? $request->budget : session('filter_budget');
+
+    // إذا جاءت بيانات فلترة في الريكوست حدث السيشن بها
+    if ($request->filled('to_city_id')) {
+        session(['filter_city' => $request->to_city_id]);
+    }
+    if ($request->filled('budget')) {
+        session(['filter_budget' => $request->budget]);
+    }
+
+    // بناء الاستعلام بناءً على القيم
+    $hotelsQuery = Hotel::with('city');
+
+    if ($cityId) {
+        $hotelsQuery->where('city_id', $cityId);
+    }
+
+    if ($budget) {
+        $hotelsQuery->where('price', '<=', $budget);
+    }
+
+    $filteredHotels = $hotelsQuery->get();
+
+    return view('site.plan', compact('filteredHotels'));
+}
+//////
 
     public function booking($id) // الحجز المباشر
     {
@@ -127,14 +185,13 @@ class SiteController extends Controller
               'children_no' => 'required',
               'arrival_date' => 'required',
               'departure_date' => 'required',
-              'notes' => 'required',
+              'notes' => 'nullable',
           ], [
               'rooms_no.required' => 'عدد الغرف مطلوب.',
               'adults_no.required' => 'عدد البالغين مطلوب.',
               'children_no.required' => 'عدد الاطفال مطلوب.',
               'arrival_date.required' => 'تاريخ المغادرة مطلوب.',
               'departure_date.required' => 'تاريخ الوصول مطلوب.',
-              'notes.required' =>  'الملاحظات مطلوبة.',
           ]);
 
         if ($request->has('day_id') && is_array($request->day_id) && count($request->day_id) > 0) {
@@ -221,6 +278,7 @@ class SiteController extends Controller
 
         foreach ($selectedTags as $tagName) {
             $tagDays = Day::with('tag')
+                ->where('city_id', $hotel->city_id) // فقط داخل المدينة التي اختارها
                 ->whereHas('tag', function ($query) use ($tagName) {
                     $query->where('name', $tagName);
                 })

@@ -20,4 +20,9 @@ class City extends Model
     {
         return $this->hasMany(Hotel::class);
     }
+
+    public function days()
+    {
+        return $this->hasMany(Day::class);
+    }
 }

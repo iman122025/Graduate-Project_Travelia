@@ -12,11 +12,17 @@ class Day extends Model
         'activities',
         'image',
         'tag_id',
+        'city_id',
     ];
 
     public function tag()
     {
         return $this->belongsTo(Tag::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
     public function bookings()

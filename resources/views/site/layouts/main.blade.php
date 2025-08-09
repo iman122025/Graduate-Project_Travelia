@@ -260,7 +260,12 @@
     @include('site.layouts.header')
             <!--end::Header-->
             <!--begin::Landing hero-->
-    @yield('content')
+
+    {{-- <div id="app" class="container my-5"> --}}
+
+        @yield('content')
+
+    {{-- </div> --}}
 
     <!--begin::Footer Section-->
     <!--begin::Footer-->
@@ -272,7 +277,7 @@
             <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
 
-            <script>
+            {{-- <script>
                 const { createApp } = Vue;
 
                 createApp({
@@ -295,6 +300,6 @@
                         }
                     }
                 }).mount('#app');
-            </script>
+            </script> --}}
 </body>
 </html>
