@@ -121,6 +121,11 @@
                                                     {{$booking->created_at}}
                                                 </div>
                                                 <div class="mb-5">
+                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">المدينة/الدولة</label>
+                                                    {{$booking->hotel->city->name}} - {{$booking->hotel->city->country}}
+                                                </div>
+
+                                                <div class="mb-5">
                                                     <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">الفندق:</label>
                                                     {{$booking->hotel->name}}
                                                 </div>
@@ -169,6 +174,8 @@
                                                         <th class="min-w-100px">العنوان</th>
                                                         <th class="min-w-100px">الموقع</th>
                                                         <th class="min-w-100px">الأنشطة</th>
+                                                        <th class="min-w-100px">التاغ</th>
+                                                        <th class="min-w-100px">المدينة/الدولة</th>
                                                     </tr>
                                                     <!--end::Table row-->
                                                     </thead>
@@ -191,6 +198,10 @@
                                                             <!--end::Company=-->
 
                                                             <td>{{$day->activities}}</td>
+
+                                                            <td>{{$day->tag->name}}</td>
+
+                                                            <td>{{$booking->hotel->city->name}} - {{$booking->hotel->city->country}}</td>
 
                                                         </tr>
                                                     @endforeach

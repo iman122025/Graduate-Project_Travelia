@@ -119,6 +119,7 @@
                                 <th class="min-w-100px">الأنشطة</th>
                                 <th class="min-w-100px">الصورة</th>
                                 <th class="min-w-100px">التاغ</th>
+                                <th class="min-w-100px">المدينة/الدولة</th>
                                 <th class="text-end min-w-70px">الاجراءات</th>
                             </tr>
                             <!--end::Table row-->
@@ -153,7 +154,11 @@
 
                                 <!--begin::Date=-->
                                 <td><img src="{{ asset('storage/'.$day->image) }}"  class="w-60px me-3"/> </td>
+
                                 <td>{{$day->tag->name}}</td>
+
+                                <td>{{$day->city->name}} - {{$day->city->country}}</td>
+                                
                                 <!--end::Date=-->
                                 <!--begin::Action=-->
                                 <td class="text-end">

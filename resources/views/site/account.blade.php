@@ -181,7 +181,8 @@
 
         <form action="{{ route('site.logout') }}" method="POST">
             @csrf
-            <button type="submit" class="text-decoration-none">تسجيل الخروج</button>
+            <button type="submit" class="btn btn-danger px-4">تسجيل الخروج</button>
         </form>
     </div>
+
 @endsection

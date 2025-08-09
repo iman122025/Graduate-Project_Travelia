@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Day;
 use App\Models\Tag;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,7 @@ class DaysController extends Controller
 {
     public function index()
     {
-        $days = Day::with('tag')->get();
+        $days = Day::with(['tag', 'city'])->get();
 
         return view('admin.days.index', compact('days'));
     }
@@ -20,8 +21,9 @@ class DaysController extends Controller
     public function create()
     {
         $tags = Tag::all();
+        $cities = City::all();
 
-        return view('admin.days.create',compact('tags'));
+        return view('admin.days.create',compact('tags', 'cities'));
     }
 
     public function store(Request $request)
@@ -59,10 +61,11 @@ class DaysController extends Controller
     public function edit($id)
     {
         $tags = Tag::all();
+        $cities = City::all();
 
-        $day = Day::with('tag')->findOrFail($id);
+        $day = Day::with(['tag', 'city'])->findOrFail($id);
 
-        return view('admin.days.edit', compact('day','tags'));
+        return view('admin.days.edit', compact('day','tags','cities'));
     }
 
     public function update(Request $request, $id)

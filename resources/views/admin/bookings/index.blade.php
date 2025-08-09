@@ -96,6 +96,7 @@
                                 <th class="min-w-20px">#</th>
                                 <th class="min-w-80px">اسم العميل</th>
                                 <th class="min-w-100px">الفندق</th>
+                                <th class="min-w-100px">المدينة/الدولة</th>
                                 <th class="min-w-90px">تاريخ الحجز</th>
                                 <th class="min-w-90px">عدد الغرف</th>
                                 <th class="min-w-90px">عدد البالغين</th>
@@ -116,6 +117,9 @@
                                 </td>
                                 <td>
                                     {{$booking->hotel->name}}
+                                </td>
+                                <td>
+                                    {{$booking->hotel->city->name}} - {{$booking->hotel->city->country}}
                                 </td>
                                 <td>
                                     {{$booking->created_at}}

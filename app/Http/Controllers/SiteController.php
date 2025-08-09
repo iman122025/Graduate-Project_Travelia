@@ -59,96 +59,44 @@ class SiteController extends Controller
         return view('site.planning', compact('cities'));
     }
 
-    ////////////
-
-    /* public function plan(Request $request)
-    {
-
-        //dd($request->all());
-
-        $from = Carbon::parse($request->from_date);
-        $to   = Carbon::parse($request->to_date);
-
-        $days = $from->diffInDays($to);
-
-        session([
-            'days' => $days,
-        ]);
-
-        session([
-            'filter_city' => $request->to_city_id,
-            'filter_budget' => $request->budget,
-        ]);
-
-        $hotels = Hotel::with('city')
-            ->where('city_id', $request->to_city_id);
-
-        if ($request->budget) {
-            $hotels->where('price', '<=', $request->budget);
-        }
-
-        $filteredHotels = $hotels->get();
-
-
-        ///////////////////////
-        /* $hotels = Hotel::with('city')
-            ->when($request->to_city_id, fn($q) => $q->where('city_id', $request->to_city_id))
-            ->when($request->budget, fn($q) => $q->where('price', '<=', $request->budget))
-            ->get(); */
-
-        ///////////////////////
-        /* $filteredHotels = Hotel::with('city')
-            ->where('city_id', $request->to_city_id)
-            ->when($request->budget, function ($query) use ($request) {
-                $query->where('price', '<=', $request->budget);
-            })
-            ->get(); */
-
-        ///////////////////////
-/*
-        return view('site.plan', compact('filteredHotels'));
-    } */
-
-////////////
 
     public function plan(Request $request)
-{
-    // إذا أرسل الطلب تواريخ، احسب الفرق وعدد الأيام وخزنها
-    if ($request->filled('from_date') && $request->filled('to_date')) {
-        $from = Carbon::parse($request->from_date);
-        $to   = Carbon::parse($request->to_date);
-        $days = $from->diffInDays($to);
-        session(['days' => $days]);
+    {
+
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $from = Carbon::parse($request->from_date);
+            $to   = Carbon::parse($request->to_date);
+            $days = $from->diffInDays($to);
+            session(['days' => $days]);
+        }
+
+        $cityId = $request->filled('to_city_id') ? $request->to_city_id : session('filter_city');
+        $budget = $request->filled('budget') ? $request->budget : session('filter_budget');
+
+        // إذا جاءت بيانات فلترة في الريكوست حدث السيشن بها
+
+        if ($request->filled('to_city_id')) {
+            session(['filter_city' => $request->to_city_id]);
+        }
+        if ($request->filled('budget')) {
+            session(['filter_budget' => $request->budget]);
+        }
+
+        // بناء الاستعلام بناء على القيم
+        $hotelsQuery = Hotel::with('city');
+
+        if ($cityId) {
+            $hotelsQuery->where('city_id', $cityId);
+        }
+
+        if ($budget) {
+            $hotelsQuery->where('price', '<=', $budget);
+        }
+
+        $filteredHotels = $hotelsQuery->get();
+
+        return view('site.plan', compact('filteredHotels'));
     }
-
-    // جلب قيم الفلترة من الريكوست أو من السيشن إذا لم تكن موجودة في الريكوست
-    $cityId = $request->filled('to_city_id') ? $request->to_city_id : session('filter_city');
-    $budget = $request->filled('budget') ? $request->budget : session('filter_budget');
-
-    // إذا جاءت بيانات فلترة في الريكوست حدث السيشن بها
-    if ($request->filled('to_city_id')) {
-        session(['filter_city' => $request->to_city_id]);
-    }
-    if ($request->filled('budget')) {
-        session(['filter_budget' => $request->budget]);
-    }
-
-    // بناء الاستعلام بناءً على القيم
-    $hotelsQuery = Hotel::with('city');
-
-    if ($cityId) {
-        $hotelsQuery->where('city_id', $cityId);
-    }
-
-    if ($budget) {
-        $hotelsQuery->where('price', '<=', $budget);
-    }
-
-    $filteredHotels = $hotelsQuery->get();
-
-    return view('site.plan', compact('filteredHotels'));
-}
-//////
 
     public function booking($id) // الحجز المباشر
     {
@@ -262,7 +210,7 @@ class SiteController extends Controller
         // $hotel_id= $request->hotel_id;
 
         $hotel = Hotel::findOrFail($request->hotel_id);
-        $selectedTags = $request->input('activities', []);
+        $selectedTags = $request->input('tags', []);
 
         if (empty($selectedTags)) {
             return back()->with('error', 'يرجى اختيار نشاط واحد على الأقل.');
@@ -277,7 +225,7 @@ class SiteController extends Controller
         $daysPerTag = ceil($days / count($selectedTags)); // عدد الأيام لكل تاج
 
         foreach ($selectedTags as $tagName) {
-            $tagDays = Day::with('tag')
+            $tagDays = Day::with(['tag', 'city'])
                 ->where('city_id', $hotel->city_id) // فقط داخل المدينة التي اختارها
                 ->whereHas('tag', function ($query) use ($tagName) {
                     $query->where('name', $tagName);

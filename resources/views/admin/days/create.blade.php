@@ -130,6 +130,18 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+
+                                                <div class="mb-5">
+                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">المدينة</label>
+                                                    <select id="city_id" name="city_id"  class="form-control form-control-solid" >
+                                                        <option value="">اختر المدينة</option>
+                                                        @foreach ($cities as $city)
+                                                            <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                                                {{$city->name}}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
 

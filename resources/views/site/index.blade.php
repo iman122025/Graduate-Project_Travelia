@@ -116,7 +116,8 @@
             <!-- النموذج على الجهة اليسرى -->
             <div class="col-md-7 text-end mt-1">
 
-                <form action="{{ route('site.feedback.store') }}" method="POST" style="width: 90%; margin-right: auto;">
+                 
+                <form action="{{ route('site.feedback.store') }}" method="POST">
                     @csrf
 
                     @if ($errors->any())
@@ -149,6 +150,7 @@
                 <img src="{{ asset("assets/images/travel.png") }}" alt="image" class="img-fluid" style="max-width: 90%; height: auto;">
             </div>
         </div>
+
     </div>
 
 

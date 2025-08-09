@@ -65,6 +65,10 @@
                                 <div class="destination-content">
                                     <div class="day-title">اليوم {{ $loop->iteration }} - {{ $day->title }}</div>
                                     <div class="location-line">
+                                        <strong>المدينة:</strong>
+                                        <span class="location-text"> {{ $day->city->name }} - {{ $day->city->country }}</span>
+                                    </div>
+                                    <div class="location-line">
                                         <strong>الموقع:</strong>
                                         <span class="location-text">📍 {{ $day->location }}</span>
                                     </div>

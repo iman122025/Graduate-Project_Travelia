@@ -152,7 +152,7 @@
                 @foreach($tags as $tag)
                     <div class="col-6 col-md-4">
                         <label class="option-card text-center selectable-card">
-                            <input type="checkbox" name="activities[]" value="{{$tag->name}}" class="d-none">
+                            <input type="checkbox" name="tags[]" value="{{$tag->name}}" class="d-none">
                             <img src="{{ asset('storage/'.$tag->image) }}" alt="{{$tag->name}}">
                             <div class="option-title">{{$tag->name}}</div>
                         </label>

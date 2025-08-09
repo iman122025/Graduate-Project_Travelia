@@ -120,12 +120,24 @@
                                                     <input type="file" id="image" name="image"  class="form-control form-control-solid" />
                                                 </div>
                                                 <div class="mb-5">
-                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">التاغات</label>
+                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">التاغ</label>
                                                     <select id="tag_id" name="tag_id"  class="form-control form-control-solid" >
                                                         <option value="">اختر التاغ</option>
                                                         @foreach ($tags as $tag)
                                                             <option value="{{ $tag->id }}" {{ $tag->id == $day->tag->id ? 'selected' : '' }}>
                                                                 {{ $tag->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-5">
+                                                    <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">المدينة</label>
+                                                    <select id="city_id" name="city_id"  class="form-control form-control-solid" >
+                                                        <option value="">اختر التاغ</option>
+                                                        @foreach ($cities as $city)
+                                                            <option value="{{ $city->id }}" {{ $city->id == $day->city->id ? 'selected' : '' }}>
+                                                                {{ $city->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
