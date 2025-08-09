@@ -102,7 +102,7 @@
         <div class="mb-4 w-100 people-option">
             <label class="form-label fw-bold">عدد الأفراد</label>
             <div class="row text-center mt-3 justify-content-start">
-                <div class="col" style="margin-left: 15px">
+                <div class="col" style="">
                     <label>
                         <input type="radio" name="people_count" value="1" checked>
                         <div class="option-box">

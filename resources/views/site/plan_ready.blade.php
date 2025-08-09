@@ -53,7 +53,7 @@
 @section('content')
 
     <div class="custom-shadow border-bottom border-2 my-1 container"></div>
-    <h3 class="mb-5">تهانينا خطتك أصبحت جاهزة !:</h3>
+    <h3 class="mt-4 mb-4">تهانينا خطتك أصبحت جاهزة !</h3>
     <div class="container">
         <div class="row justify-content-center">
             @if($planDays->count())
@@ -67,6 +67,10 @@
                                     <div class="location-line">
                                         <strong>المدينة:</strong>
                                         <span class="location-text"> {{ $day->city->name }} - {{ $day->city->country }}</span>
+                                    </div>
+                                    <div class="location-line">
+                                        <strong>التصنيف:</strong>
+                                        <span class="location-text"> {{ $day->tag->name }}</span>
                                     </div>
                                     <div class="location-line">
                                         <strong>الموقع:</strong>
