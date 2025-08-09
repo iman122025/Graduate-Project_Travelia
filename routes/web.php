@@ -2,16 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
-use App\Http\Controllers\admin\DaysController;
+use App\Http\Controllers\Admin\DaysController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\admin\TagsController;
-use App\Http\Controllers\admin\AdminsController;
-use App\Http\Controllers\admin\CitiesController;
-use App\Http\Controllers\admin\HotelsController;
-use App\Http\Controllers\admin\BookingsController;
-use App\Http\Controllers\admin\CustomersController;
+use App\Http\Controllers\Admin\TagsController;
+use App\Http\Controllers\Admin\AdminsController;
+use App\Http\Controllers\Admin\CitiesController;
+use App\Http\Controllers\Admin\HotelsController;
+use App\Http\Controllers\Admin\BookingsController;
+use App\Http\Controllers\Admin\CustomersController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\admin\BookingAdminController;
+use App\Http\Controllers\Admin\BookingAdminController;
 
 
 
