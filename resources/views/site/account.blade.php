@@ -185,4 +185,16 @@
         </form>
     </div>
 
+{{--     <!-- تسجيل الخروج -->
+<div class="fw-bold text-center mt-5 container col-9">
+  <a href="index.html" class="text-decoration-none" style="color:#ff0000;">
+    <i class="fa-solid fa-right-from-bracket ms-2" style="color:#ff0000;"></i> تسجيل الخروج
+  </a>
+</div> --}}
+
+
+    <div class="custom-shadow border-bottom border-2 my-5 container"></div>
+
+
+
 @endsection
