@@ -69,6 +69,10 @@ class CitiesController extends Controller
             'season' => 'required|in:الصيف,الشتاء,الربيع,الخريف',
             'image' => 'nullable|image|max:51200',
         ], [
+            'name.required' => 'اسم المدينة مطلوب.',
+            'country.required' => 'اسم الدولة مطلوب.',
+            'season.required' => 'اسم الموسم مطلوب.',
+            'image.required' => 'صورة المدينة مطلوبة.',
             'season.in' => 'الموسم يجب أن يكون أحد الفصول التالية: الصيف، الشتاء، الربيع، أو الخريف.',
         ]);
 
