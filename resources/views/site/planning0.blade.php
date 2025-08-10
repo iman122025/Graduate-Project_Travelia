@@ -2,28 +2,12 @@
 @section('content')
     <style>
 
-        .people-option {
-            --opt-width: 100px; /* عرض كل مربع */
-            --gap: 250px;        /* المسافة بين المربعات */
-        }
-
-        .people-option .options-wrap {
-            display: flex;
-            justify-content: center;
-            gap: var(--gap);
-            flex-wrap: wrap;
-            max-width: calc((var(--opt-width) * 3) + (var(--gap) * 2)) !important;
-            margin: 0 auto;
-        }
-
-        .people-option .option {
-            flex: 0 0 var(--opt-width);
-            max-width: var(--opt-width);
-            box-sizing: border-box;
-        }
-
         .people-option input[type="radio"] {
             display: none;
+        }
+
+        .people-option label {
+            cursor: pointer;
         }
 
         .people-option .option-box {
@@ -31,67 +15,15 @@
             border-radius: 10px;
             padding: 15px;
             text-align: center;
-            transition: all 0.25s ease;
-            height: 100px; /* ارتفاع موحد */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            /* background-color: #F8F6F6; */
-        }
-
-        .people-option .option-box .fa {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 8px;
-            line-height: 1;
+            transition: all 0.3s ease;
         }
 
         .people-option input[type="radio"]:checked + .option-box {
             border-color: #ff9149;
             background-color: #fff6ef;
-            box-shadow: 0 6px 18px rgba(255,145,73,0.12);
-            /* transform: translateY(-4px); */
-            transition: all 0.3s ease;
         }
-
-        .people-option .option-box .label-text {
-            margin-top: 6px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        /* حاوية الزر لتساوي عرضها مع عرض المربعات */
-
-        .actions-wrap {
-            /* max-width: calc((var(--opt-width) * 3) + (var(--gap) * 2)) !important; */
-            max-width: 800px; /*  (( 100 * 3 ) + ( 250 * 2 ))   */
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .btn-next {
-            background-color: #ff9149e5;
-            color: #fff;
-            border-radius: 10px;
-            font-weight: 700;
-            padding: 10px 18px;
-            width: 100%;
-            border: none;
-        }
-
-        @media (max-width: 520px) {
-            .people-option {
-                --opt-width: 120px;
-                --gap: 10px;
-            }
-            .people-option .option-box {
-                height: 110px;
-                padding: 12px;
-            }
-        }
+        
     </style>
-
 <div class="custom-shadow border-bottom border-2 my-1 container"></div>
 
     @if(session('error'))
@@ -107,7 +39,7 @@
     @endif
 
 <img
-    src="{{ asset('assets/images/Travelia UI (1).pdf-image-060.png') }}"
+    src="{{ asset("assets/images/Travelia UI (1).pdf-image-060.png") }}"
     alt="صورة الوجهة"
     class="rounded mt-5 d-block mx-auto"
     style="height: 300px; width: 90%;"
@@ -122,7 +54,8 @@
             <label class="form-label fw-bold">المكان</label>
             <div class="row g-2">
                 <div class="col-md-6">
-                    <select class="form-control text-end" name="from_city_id">
+                    {{-- <input type="text" class="form-control text-end" placeholder="من" /> --}}
+                    <select  class="form-control text-end" name="from_city_id">
                         <option value="">اختر - من</option>
                         @foreach ($cities as $city)
                             <option value="{{ $city->id }}">{{ $city->country }} - {{ $city->name }}</option>
@@ -130,7 +63,7 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <select class="form-control text-end" name="to_city_id">
+                    <select  class="form-control text-end" name="to_city_id">
                         <option value="">اختر - الى</option>
                         @foreach ($cities as $city)
                             <option value="{{ $city->id }}">{{ $city->country }} - {{ $city->name }}</option>
@@ -170,46 +103,46 @@
 
         <div class="mb-4 w-100 people-option">
             <label class="form-label fw-bold">عدد الأفراد</label>
-
-            <div class="options-wrap mt-3">
-                <!-- خيار شخص واحد -->
-                <label class="option" title="شخص واحد">
-                    <input type="radio" name="people_count" value="1" checked>
-                    <div class="option-box">
-                        <i class="fa-solid fa-user"></i>
-                        <div class="label-text">شخص واحد</div>
-                    </div>
-                </label>
-
-                <!-- خيار شخصان -->
-                <label class="option" title="شخصان">
-                    <input type="radio" name="people_count" value="2">
-                    <div class="option-box">
-                        <div style="display:flex; gap:6px; align-items:center; justify-content:center;">
-                            <i class="fa-solid fa-user"></i>
-                            <i class="fa-solid fa-user"></i>
+            <div class="row text-center mt-3 justify-content-start">
+                <div class="col" style="">
+                    <label>
+                        <input type="radio" name="people_count" value="1" checked>
+                        <div class="option-box">
+                            <i class="fa-solid fa-user mb-1"></i>
+                            <div>شخص واحد</div>
                         </div>
-                        <div class="label-text">شخصان</div>
-                    </div>
-                </label>
-
-                <!-- خيار عائلة -->
-                <label class="option" title="عائلة">
-                    <input type="radio" name="people_count" value="family">
-                    <div class="option-box">
-                        <i class="fa-solid fa-users"></i>
-                        <div class="label-text">عائلة</div>
-                    </div>
-                </label>
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        <input type="radio" name="people_count" value="2">
+                        <div class="option-box">
+                            <i class="fa-solid fa-user"></i>
+                            <i class="fa-solid fa-user"></i>
+                            <div class="mt-2">شخصان</div>
+                        </div>
+                    </label>
+                </div>
+                <div class="col">
+                    <label>
+                        <input type="radio" name="people_count" value="family">
+                        <div class="option-box">
+                            <i class="fa-solid fa-users mb-1"></i>
+                            <div>عائلة</div>
+                        </div>
+                    </label>
+                </div>
             </div>
         </div>
 
+
+
+
         <div class="text-center mt-4">
-            <div class="actions-wrap">
-                <button type="submit" class="btn-next">
-                    التالي
-                </button>
-            </div>
+            <button type="submit" class="btn px-5 py-2 fw-bold col-9" style="background-color: #ff9149e5; color: white;">
+                التالي
+            </button>
+{{--            <a href="{{ route('site.plan') }}" class="btn px-5 py-2 fw-bold col-9" style="background-color: #ff9149e5; color: white;">التالي</a>--}}
         </div>
 
     </form>
@@ -217,7 +150,6 @@
 
 <div class="custom-shadow border-bottom border-2 my-5 container"></div>
 @endsection
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -233,3 +165,4 @@
         }
     });
 </script>
+
