@@ -176,16 +176,27 @@
 
     <div class="custom-shadow border-bottom border-2 my-5 container"></div>
 
-    <!-- تسجيل الخروج -->
+    {{-- <!-- تسجيل الخروج -->
     <div class="fw-bold text-center mt-5 container col-9">
 
         <form action="{{ route('site.logout') }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-danger px-4">تسجيل الخروج</button>
         </form>
-    </div>
+    </div> --}}
 
-{{--     <!-- تسجيل الخروج -->
+    <!-- تسجيل الخروج -->
+<div class="fw-bold text-center mt-5 container col-9">
+  <form action="{{ route('site.logout') }}" method="POST" style="display: inline;">
+    @csrf
+    <button type="submit" class="text-decoration-none" style="color:#ff0000; background:none; border:none; padding:0; font-weight: bold;">
+      <i class="fa-solid fa-right-from-bracket ms-2" style="color:#ff0000;"></i>
+      تسجيل الخروج
+    </button>
+  </form>
+</div>
+
+    {{-- <!-- تسجيل الخروج -->
 <div class="fw-bold text-center mt-5 container col-9">
   <a href="index.html" class="text-decoration-none" style="color:#ff0000;">
     <i class="fa-solid fa-right-from-bracket ms-2" style="color:#ff0000;"></i> تسجيل الخروج
